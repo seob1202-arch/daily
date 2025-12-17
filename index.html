@@ -1615,12 +1615,25 @@
         }
         
         function populateCategories() {
+            // 현재 선택된 국가/도시에 해당하는 업체만 필터링
+            let filteredBusinesses = businessData;
+            
+            if (state.selectedCountry) {
+                filteredBusinesses = filteredBusinesses.filter(b => b.country === state.selectedCountry);
+            }
+            
+            if (state.selectedCity) {
+                filteredBusinesses = filteredBusinesses.filter(b => b.city === state.selectedCity);
+            }
+            
+            // 필터링된 업체들의 카테고리만 수집
             const categories = new Set();
-            businessData.forEach(b => {
+            filteredBusinesses.forEach(b => {
                 if (Array.isArray(b.services)) {
                     b.services.forEach(s => categories.add(s));
                 }
             });
+            
             const sorted = ['전체', ...Array.from(categories).sort()];
             
             $.categoryList.innerHTML = '';
@@ -1634,6 +1647,14 @@
                 chip.addEventListener('click', () => handleCategoryClick(cat));
                 $.categoryList.appendChild(chip);
             });
+            
+            // 선택된 카테고리가 새 목록에 없으면 초기화
+            if (!state.selectedCategories.has('전체') && 
+                !Array.from(state.selectedCategories).some(cat => categories.has(cat))) {
+                state.selectedCategories.clear();
+                state.selectedCategories.add('전체');
+                state.selectedSubkeyword = '';
+            }
         }
         
         function setupEvents() {
@@ -1652,11 +1673,13 @@
                 state.selectedCity = '';
                 $.citySelect.value = '';
                 populateCities(e.target.value);
+                populateCategories(); // 카테고리 업데이트
                 handleFilterChange();
             });
             
             $.citySelect.addEventListener('change', (e) => {
                 state.selectedCity = e.target.value;
+                populateCategories(); // 카테고리 업데이트
                 handleFilterChange();
             });
             
@@ -1709,8 +1732,19 @@
         }
         
         function checkHasSubkeywords(category) {
+            // 현재 선택된 국가/도시에 해당하는 업체만 필터링
+            let filteredBusinesses = businessData;
+            
+            if (state.selectedCountry) {
+                filteredBusinesses = filteredBusinesses.filter(b => b.country === state.selectedCountry);
+            }
+            
+            if (state.selectedCity) {
+                filteredBusinesses = filteredBusinesses.filter(b => b.city === state.selectedCity);
+            }
+            
             const subkeywords = new Set();
-            businessData.forEach(b => {
+            filteredBusinesses.forEach(b => {
                 if (Array.isArray(b.services) && b.services.includes(category)) {
                     if (Array.isArray(b.subkeywords) && b.subkeywords.length > 0) {
                         b.subkeywords.forEach(sk => {
@@ -1727,8 +1761,19 @@
         function showSubkeywordModal(category) {
             $.modalCategoryTitle.textContent = '세부 카테고리 선택';
             
+            // 현재 선택된 국가/도시에 해당하는 업체만 필터링
+            let filteredBusinesses = businessData;
+            
+            if (state.selectedCountry) {
+                filteredBusinesses = filteredBusinesses.filter(b => b.country === state.selectedCountry);
+            }
+            
+            if (state.selectedCity) {
+                filteredBusinesses = filteredBusinesses.filter(b => b.city === state.selectedCity);
+            }
+            
             const subkeywordCounts = {};
-            businessData.forEach(b => {
+            filteredBusinesses.forEach(b => {
                 if (Array.isArray(b.services) && b.services.includes(category)) {
                     if (Array.isArray(b.subkeywords) && b.subkeywords.length > 0) {
                         b.subkeywords.forEach(sk => {

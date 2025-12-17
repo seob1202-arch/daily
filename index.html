@@ -74,6 +74,11 @@
             to { transform: scale(1); opacity: 1; }
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
         html {
             scroll-behavior: smooth;
         }
@@ -85,6 +90,116 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+        }
+        
+        /* ========== Modal/Popup Styles ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        .modal-overlay.hidden {
+            display: none;
+        }
+        
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: var(--radius-2xl);
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.3s var(--transition);
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s var(--transition);
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        .modal-close:hover {
+            background: var(--error);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .subkeyword-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .subkeyword-item {
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s var(--transition);
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .subkeyword-item:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateX(8px);
+        }
+        
+        .subkeyword-count {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        
+        .subkeyword-item:hover .subkeyword-count {
+            background: rgba(255, 255, 255, 0.3);
         }
         
         /* ========== Hero Header ========== */
@@ -576,7 +691,6 @@
             font-weight: 700;
             margin-bottom: 1rem;
         }
-
         .icon {
             width: 100%;
             height: 100%;
@@ -586,7 +700,6 @@
             stroke-linecap: round;
             stroke-linejoin: round;
         }
-
         .card-details {
             display: flex;
             flex-direction: column;
@@ -617,12 +730,8 @@
             flex: 1;
         }
         
-        /* ========================================
-           모바일 버튼 레이아웃 수정 지점 (1)
-        ======================================== */
         .card-actions {
-            display: flex; /* grid -> flex 변경 */
-            /* grid-template-columns: repeat(4, 1fr); 제거 */
+            display: flex;
             gap: 0.625rem;
         }
         
@@ -642,12 +751,8 @@
             transition: all 0.3s var(--transition);
             font-weight: 700;
             min-height: 80px;
-            
-            flex: 1; /* 자식 요소가 꽉 차도록 flex: 1 추가 */
+            flex: 1;
         }
-        /* ========================================
-           (수정 완료)
-        ======================================== */
         
         .action-btn:hover {
             background: var(--primary);
@@ -907,7 +1012,6 @@
             margin-bottom: 2rem;
             color: #1E40AF;
         }
-
         .location-notice-text {
             flex: 1;
             font-weight: 600;
@@ -963,15 +1067,12 @@
             .hero-content {
                 padding: 0 1.5rem; 
             }
-
             .hero-badge {
                 margin-bottom: 1.5rem;
             }
-
             .hero h1 {
                 margin-bottom: 1rem;
             }
-
             .hero-subtitle {
                 margin-bottom: 2.5rem;
             }
@@ -983,12 +1084,10 @@
                 width: 100%;
                 padding: 0 1rem;
             }
-
             .stat-number {
                 font-size: 2rem;
                 margin-bottom: 0.25rem;
             }
-
             .stat-label {
                 font-size: 0.8125rem; 
                 display: block;
@@ -1020,35 +1119,23 @@
                 display: none;
             }
             
-            /* ========================================
-               모바일 버튼 레이아웃 수정 지점 (2)
-            ======================================== */
             .card-actions {
-                /* grid-template-columns: repeat(2, 1fr); 제거 */
-                /* flex로 변경된 기본 스타일을 따름 */
                 gap: 0.75rem;
             }
-            /* ========================================
-               (수정 완료)
-            ======================================== */
             
             .action-btn {
                 min-height: 70px;
-                /* flex: 1; 은 기본 스타일에서 상속받음 */
             }
-
             .location-notice {
                 flex-direction: column;
                 text-align: center;
                 gap: 1.25rem;
                 padding: 1.5rem;
             }
-
             .location-notice-text {
                 padding-right: 0;
                 line-height: 1.5;
             }
-
             .location-btn {
                 width: 100%;
                 justify-content: center;
@@ -1056,13 +1143,17 @@
                 font-size: 1rem;
                 margin-left: 0;
             }
+            
+            .modal-content {
+                max-height: 90vh;
+                padding: 1.5rem;
+            }
         }
         
         @media (max-width: 480px) {
             .hero h1 {
                 font-size: 2rem;
             }
-
             .hero {
                  padding-top: 4rem;
             }
@@ -1070,7 +1161,6 @@
             .stat-number {
                 font-size: 1.875rem;
             }
-
             .stat-label {
                 font-size: 0.75rem;
             }
@@ -1101,6 +1191,17 @@
 </head>
 <body>
     <a href="#main" class="sr-only">본문으로 바로가기</a>
+    
+    <!-- Subkeyword Modal -->
+    <div id="subkeyword-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-category-title">세부 카테고리 선택</h3>
+                <button class="modal-close" id="modal-close-btn" aria-label="닫기">×</button>
+            </div>
+            <div class="subkeyword-list" id="subkeyword-list"></div>
+        </div>
+    </div>
     
     <header class="hero">
         <div class="hero-content">
@@ -1257,7 +1358,7 @@
         }
         
         let businessData = [];
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbzW8h5kevQs9LVE0i7Qo-FmTv0gnl37atLJEBplbPSXo-b7nUO--w_J36oA3Bi0qe-P/exec';
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmE_NZgRjuanUYsLGopJ-YmHDecQYtiOhGe77MAlFXjkwYhgnGFh0m14IUvNIp-9lX/exec';
         
         async function fetchData() {
             try {
@@ -1278,6 +1379,7 @@
             currentPage: 1,
             itemsPerPage: 12,
             selectedCategories: new Set(['전체']),
+            selectedSubkeyword: '', // 선택된 서브키워드
             searchQuery: '',
             selectedCountry: '',
             selectedCity: '',
@@ -1301,7 +1403,11 @@
             locationNotice: document.getElementById('location-notice'),
             totalBusinesses: document.getElementById('total-businesses'),
             totalCountries: document.getElementById('total-countries'),
-            totalCities: document.getElementById('total-cities')
+            totalCities: document.getElementById('total-cities'),
+            subkeywordModal: document.getElementById('subkeyword-modal'),
+            subkeywordList: document.getElementById('subkeyword-list'),
+            modalCategoryTitle: document.getElementById('modal-category-title'),
+            modalCloseBtn: document.getElementById('modal-close-btn')
         };
         
         let searchTimeout = null;
@@ -1354,7 +1460,7 @@
                 }
             }, 20);
         }
-
+        
         function showLocationNotice(msg, type) {
             let textSpan = $.locationNotice.querySelector('.location-notice-text');
             
@@ -1374,7 +1480,7 @@
             $.locationNotice.className = `location-notice ${type}`;
             $.locationNotice.classList.remove('hidden');
         }
-
+        
         function getUserLocation() {
             if (!navigator.geolocation) {
                 showLocationNotice('위치 서비스를 지원하지 않습니다.', 'error');
@@ -1419,10 +1525,8 @@
                     showLocationNotice('✅ 위치 정보를 가져왔습니다!', 'success');
                     enableDistanceSort();
                     if (state.sortBy === 'distance') handleFilterChange();
-
                     const btn = $.locationNotice.querySelector('.location-btn');
                     if (btn) btn.classList.add('hidden');
-
                     setTimeout(() => $.locationNotice.classList.add('hidden'), 3000);
                 },
                 () => {
@@ -1527,25 +1631,123 @@
             
             $.cardViewBtn.addEventListener('click', () => switchView('card'));
             $.tableViewBtn.addEventListener('click', () => switchView('table'));
+            
+            // 모달 닫기
+            $.modalCloseBtn.addEventListener('click', closeSubkeywordModal);
+            $.subkeywordModal.addEventListener('click', (e) => {
+                if (e.target === $.subkeywordModal) {
+                    closeSubkeywordModal();
+                }
+            });
         }
         
         function handleCategoryClick(category) {
             if (category === '전체') {
                 state.selectedCategories.clear();
                 state.selectedCategories.add('전체');
+                state.selectedSubkeyword = ''; // 서브키워드 초기화
+                updateChipStates();
+                handleFilterChange();
             } else {
-                state.selectedCategories.delete('전체');
-                if (state.selectedCategories.has(category)) {
-                    state.selectedCategories.delete(category);
-                    if (state.selectedCategories.size === 0) {
-                        state.selectedCategories.add('전체');
-                    }
+                // 해당 카테고리의 서브키워드가 있는지 확인
+                const hasSubkeywords = checkHasSubkeywords(category);
+                
+                if (hasSubkeywords) {
+                    // 서브키워드가 있으면 팝업 표시
+                    showSubkeywordModal(category);
                 } else {
-                    state.selectedCategories.add(category);
+                    // 서브키워드가 없으면 바로 필터링
+                    state.selectedCategories.clear();
+                    state.selectedCategories.delete('전체');
+                    
+                    if (state.selectedCategories.has(category)) {
+                        state.selectedCategories.delete(category);
+                        state.selectedSubkeyword = ''; // 서브키워드 초기화
+                        if (state.selectedCategories.size === 0) {
+                            state.selectedCategories.add('전체');
+                        }
+                    } else {
+                        state.selectedCategories.add(category);
+                    }
+                    
+                    updateChipStates();
+                    handleFilterChange();
                 }
             }
+        }
+        
+        // 해당 카테고리에 서브키워드가 있는지 확인
+        function checkHasSubkeywords(category) {
+            const subkeywords = new Set();
+            businessData.forEach(b => {
+                if (b.services.includes(category) && b.subkeywords && b.subkeywords.length > 0) {
+                    b.subkeywords.forEach(sk => subkeywords.add(sk));
+                }
+            });
+            return subkeywords.size > 0;
+        }
+        
+        // 서브키워드 모달 표시
+        function showSubkeywordModal(category) {
+            $.modalCategoryTitle.textContent = `${category} - 세부 카테고리 선택`;
+            
+            // 해당 카테고리의 서브키워드 수집
+            const subkeywordCounts = {};
+            businessData.forEach(b => {
+                if (b.services.includes(category) && b.subkeywords && b.subkeywords.length > 0) {
+                    b.subkeywords.forEach(sk => {
+                        subkeywordCounts[sk] = (subkeywordCounts[sk] || 0) + 1;
+                    });
+                }
+            });
+            
+            // 서브키워드 목록 렌더링
+            $.subkeywordList.innerHTML = '';
+            
+            // "전체" 옵션 추가
+            const allItem = document.createElement('div');
+            allItem.className = 'subkeyword-item';
+            allItem.innerHTML = `
+                <span>전체 ${category}</span>
+                <span class="subkeyword-count">${Object.values(subkeywordCounts).reduce((a, b) => a + b, 0)}</span>
+            `;
+            allItem.addEventListener('click', () => {
+                selectSubkeyword(category, '');
+            });
+            $.subkeywordList.appendChild(allItem);
+            
+            // 각 서브키워드 옵션
+            Object.keys(subkeywordCounts).sort().forEach(sk => {
+                const item = document.createElement('div');
+                item.className = 'subkeyword-item';
+                item.innerHTML = `
+                    <span>${escapeHtml(sk)}</span>
+                    <span class="subkeyword-count">${subkeywordCounts[sk]}</span>
+                `;
+                item.addEventListener('click', () => {
+                    selectSubkeyword(category, sk);
+                });
+                $.subkeywordList.appendChild(item);
+            });
+            
+            $.subkeywordModal.classList.remove('hidden');
+        }
+        
+        // 서브키워드 선택
+        function selectSubkeyword(category, subkeyword) {
+            state.selectedCategories.clear();
+            state.selectedCategories.delete('전체');
+            state.selectedCategories.add(category);
+            state.selectedSubkeyword = subkeyword;
+            
             updateChipStates();
+            closeSubkeywordModal();
             handleFilterChange();
+        }
+        
+        // 모달 닫기
+        function closeSubkeywordModal() {
+            $.subkeywordModal.classList.add('hidden');
         }
         
         function updateChipStates() {
@@ -1568,16 +1770,24 @@
             state.filteredData = businessData.filter(b => {
                 if (state.searchQuery) {
                     const q = state.searchQuery.toLowerCase();
-                    
                     if (![b.businessName, b.address, b.feature].some(f => String(f).toLowerCase().includes(q))) {
                         return false;
                     }
                 }
                 if (state.selectedCountry && b.country !== state.selectedCountry) return false;
                 if (state.selectedCity && b.city !== state.selectedCity) return false;
+                
                 if (!state.selectedCategories.has('전체')) {
                     if (!b.services.some(s => state.selectedCategories.has(s))) return false;
+                    
+                    // 서브키워드 필터링 추가
+                    if (state.selectedSubkeyword) {
+                        if (!b.subkeywords || !b.subkeywords.includes(state.selectedSubkeyword)) {
+                            return false;
+                        }
+                    }
                 }
+                
                 return true;
             });
         }
@@ -1751,7 +1961,7 @@
                     : `data-src="${escapeHtml(b.image)}" loading="lazy"`;
                 const tags = b.services.map(s => `<span class="tag">${escapeHtml(s)}</span>`).join('');
                 const email = b.email ? `<a href="mailto:${escapeHtml(b.email)}" class="table-action-btn" title="이메일">${ICONS.email}</a>` : '';
-                const website = b.website ? `<a href="https://post.naver.com/${escapeHtml(b.website)}" target="_blank" rel="noopener" class="table-action-btn" title="웹사이트">${ICONS.web}</a>` : '';
+                const website = b.website ? `<a href="https://${escapeHtml(b.website)}" target="_blank" rel="noopener" class="table-action-btn" title="웹사이트">${ICONS.web}</a>` : '';
                 
                 row.innerHTML = `
                     <td><img ${imgAttr} alt="${escapeHtml(b.businessName)}" class="table-image"></td>
@@ -1785,7 +1995,7 @@
         function updateResultCount() {
             const count = state.filteredData.length;
             const selectedCount = state.selectedCategories.size - (state.selectedCategories.has('전체') ? 1 : 0);
-            const badge = selectedCount > 0 ? `<span class="filter-count">${selectedCount}</span>` : '';
+            const badge = selectedCount > 0 ? `<span class="filter-count">${selectedCount}${state.selectedSubkeyword ? ' + 세부' : ''}</span>` : '';
             $.resultsText.innerHTML = `검색 결과 <strong>${count}</strong>개 ${badge}`;
         }
         
